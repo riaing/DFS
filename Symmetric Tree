@@ -30,13 +30,13 @@ public class Solution {
        return  isSymmetric(root, root); 
     }
      public boolean isSymmetric(TreeNode q, TreeNode p){
-         if (q== null && p == null){
+         if (q== null && p == null){ // 递归停止的基线条件（base case）
              return true; 
          }
          if (q==null || p == null){
              return false;
          }
-         if(q.val!=p.val){ //边界条件不能是q.val == p.val. 这样的话还要往下recursion
+         if(q.val!=p.val){ //基线条件不能是q.val == p.val. 这样的话还要往下recursion
              return false; 
          }
          
