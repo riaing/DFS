@@ -11,7 +11,9 @@ For example,
   [3,2,1]
 ]
 
-
+还是用一个循环递归处理子问题。区别是这里并不是一直往后推进的，前面的数有可能放到后面，
+所以我们需要维护一个used数组来表示该元素是否已经在当前结果中，因为每次我们取一个元素放入结果，
+然后递归剩下的元素，所以不会出现重复。时间复杂度还是NP问题的指数量级。
 
 public class Solution {
     public List<List<Integer>> permute(int[] nums) {
