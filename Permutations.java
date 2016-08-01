@@ -19,7 +19,7 @@ public class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> allsets = new ArrayList<List<Integer>>();
         List<Integer> set = new ArrayList<Integer>(); 
-        boolean[] used = new boolean[32]; 
+        boolean[] used = new boolean[nums.length]; 
         if(nums != null){
             helper(nums, used, set, allsets); 
         }
