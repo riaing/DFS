@@ -28,6 +28,7 @@ public class Solution {
                         List<Integer> cur, List<List<Integer>> result){
         if (cur.size() == combination){ //if size == k. 
             result.add(new ArrayList<Integer>(cur)); 
+            return;//结束当前噌； 
         }
         for ( int i = index; i<=list; i ++ ){
             cur.add(i);
