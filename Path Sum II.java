@@ -1,5 +1,3 @@
-用DFS来解， 可以套template
-
 Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
 
 For example:
@@ -27,6 +25,9 @@ return
  *     TreeNode(int x) { val = x; }
  * }
  */
+ 
+ 用DFS来解， 可以套template
+ 
 public class Solution {
    
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
