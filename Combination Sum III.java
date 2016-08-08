@@ -32,10 +32,10 @@ public class Solution {
         if (n<0){
            return;  
         }
-        if (curset.size() == k && n == 0 ) { 
-           // if(n == 0){ //two conditions 
+        if (curset.size() == k ) { 
+           if(n == 0){ //注意！这里要先看size再看 结果的值，顺序不可换。因为有时结果对了但size还没到。path sum中也是一样。 
                 allsets.add(new ArrayList<Integer>(curset));
-           // }
+            }
             return; 
         }
         for (int i = start; i<10; i++ ){
