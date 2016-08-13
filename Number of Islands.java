@@ -21,6 +21,7 @@ Answer: 3
 public class Solution {
     private int m, n ;  
     public int numIslands(char[][] grid) {
+        ---------判断方法之一，逐层递进
        if(grid == null){ // 三步判断条件逐一递进
            return 0 ; 
        }
@@ -35,6 +36,18 @@ public class Solution {
         if  (n == 0 ){
             return 0; 
         }
+        --------------- 方法之二，运用 or的性质
+        if(grid == null || grid.length ==0 || grid[0].length == 0){ 
+           return 0 ; 
+       }
+        
+         m = grid.length;
+         n = grid[0].length;
+         
+         注意：这里 or的三个顺序不可以更改，因为如果grid == null是第一判断，如果==null就立马return 0，不会再进判断grid。length ==0
+         （不然会nullpointerexception）。
+         if中不能把grid.length用变量替代。eg：不能把 m=...，n = ..写在if的前面，因为如果没先判断grid == null， m，n就会nullpointerexception。
+         ---------------------------
         
         int count = 0; 
         for (int i = 0 ; i <m; i++ ){
