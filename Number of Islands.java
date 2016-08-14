@@ -77,3 +77,58 @@ public class Solution {
 
     }
 }
+
+---------BFS 解法----------------
+
+public class Solution {
+    private int m, n ;  
+    public int numIslands(char[][] grid) {
+       if(grid == null || grid.length ==0 || grid[0].length == 0){ // 三步判断条件逐一递进
+           return 0 ; 
+       }
+        m = grid.length;  // heng 
+        n = grid[0].length; //zong 
+        int count = 0; 
+        
+        for(int i = 0 ; i< m ; i++){
+            for(int j =0; j< n; j++){
+                if(grid[i][j] == '1'){
+                    count ++; 
+                    bfs(grid, i, j) ;
+                }
+            }
+        }
+        return count; 
+
+    }
+    
+    private void bfs(char[][] grid, int x, int y){
+        grid[x][y] = '0';
+        Queue<Integer> q = new LinkedList<Integer>() ; 
+        int code = x*n+ y; //get the current ith element; 把坐标作为一个数存下来，就不用用两个Queue
+        q.offer(code);
+        while(q.size() != 0){
+            code = q.poll();
+            int i = code/n;
+            int j =code%n ; //get the location。
+            
+            if(i > 0 && grid[i-1][j] == '1'){
+                q.offer((i-1)*n +j);
+                grid[i-1][j] ='0'; 
+            }
+            if(i < m-1  && grid[i+1][j] == '1'){ //can't be < m;  
+                q.offer((i+1)*n +j);
+                grid[i+1][j] ='0'; 
+            }
+            if(j < n-1 && grid[i][j+1] == '1'){ //can't be < n; 
+                q.offer(i*n +j+1);
+                grid[i][j+1] ='0'; 
+            }
+            if(j >0  && grid[i][j-1] == '1'){
+                q.offer(i*n +j -1);
+                grid[i][j-1] ='0'; 
+            }
+            
+        }
+    }
+}
