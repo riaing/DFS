@@ -20,7 +20,7 @@ You should return [1, 3, 4].
  * }
  */
  
- 
+ -------------------------DFS--------
 public class Solution {
     public List<Integer> rightSideView(TreeNode root) {
        
@@ -62,5 +62,47 @@ public class Solution {
             }
               dfs(root.left , result, depth +1); 
         }
+    }
+}
+
+-------------------BFS---------------
+
+//和 tree travasal， zigzag 那些题几乎一样，这里的判断条件是当是当层最后一个元素时，加到result中
+public class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+       
+        List<Integer> result = new ArrayList<Integer>();
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        
+        
+        if(root == null){
+            return result;
+        }
+        q.offer(root); 
+      
+        bfs(root, result, q);
+        return result; 
+    }
+
+    private void bfs(TreeNode root, List<Integer> result, Queue<TreeNode> q){
+      
+      while(q.size() != 0){
+          int size = q.size();
+          for(int i = 0; i< size; i++){
+              TreeNode cur = q.poll();
+              
+              if(cur.left != null){
+                  q.offer(cur.left);
+              }
+              if(cur.right != null){
+                  q.offer(cur.right);
+              }
+              
+              if(i == size -1){  //此题特殊的地方
+                  result.add(cur.val);
+              }
+          }
+      }
+        
     }
 }
