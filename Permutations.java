@@ -34,6 +34,7 @@ public class Solution {
         }
         for(int i = 0; i<nums.length; i ++){    
             if(used[i] == true){
+            //if (used[i] || i ==set.size() ){ 如果要求不能在原数组的位置上
                 continue;
             }
             set.add(nums[i]);
