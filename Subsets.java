@@ -108,3 +108,41 @@ public List<List<Integer>> subsets(int[] nums) {
 	
 }
 
+
+###DFS ----- 每个element 只有加，或不加，
+public class Solution {
+    /**
+     * @param S: A set of numbers.
+     * @return: A list of lists. All valid subsets.
+     */
+public List<List<Integer>> subsets(int[] nums) {
+	         List<List<Integer>> results = new ArrayList<List<Integer>>();
+	         List<Integer> subset = new ArrayList<Integer>(); 
+	         if (nums == null){
+	             return results;
+	         }
+	      
+	        subsetHelper( nums, 0 , subset, results );
+	            return results; 
+	    } 
+	    
+	   private void subsetHelper(int[] nums, int index, List<Integer> subset,  List<List<Integer>> results){
+            
+            if ( index == nums.length ){
+               results.add(new ArrayList<Integer>(subset)); 
+               return; 
+            }
+            
+            subsetHelper(nums, index+1, subset, results);
+	    
+            subset.add(nums[index])；
+            subsetHelper(nums, index+1, subset, results);
+            subset.remove(subset.size()-1); 
+           
+            
+            
+         
+	 
+	  }
+	
+}
