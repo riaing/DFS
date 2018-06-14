@@ -44,6 +44,33 @@ public class Solution {
             curset.remove(curset.size() -1 ); 
 
         }
+    }
+}
+
+----------------6.13.18 update 
+class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> results = new ArrayList<List<Integer>>();
+        if (k == 0 || n == 0) {
+            return results;
+        }
+         helper(k, n, 1, results, new ArrayList<Integer>(), 0);
+        return results;
+    }
     
+    private void helper(int size, int target, int index, List<List<Integer>> results, List<Integer> result, int sum) {
+        if (sum > target) {
+            return;
+        }
+        if (result.size() == size && sum == target) {
+             results.add(new ArrayList<Integer>(result));
+            return;
+        }
+
+        for (int i = index; i <= 9; i++) {
+            result.add(i);
+            helper(size, target, i + 1, results, result, sum + i);
+            result.remove(result.size() -1);
+        }
     }
 }
