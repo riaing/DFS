@@ -48,5 +48,35 @@ public class Solution {
         }
 
     } 
+    
+    ------------------ 6.13.18 update ---------------------------
+    因为同一个元素可以重复使用，所以每次递归仍然用当前index。重要的基线条件的判断：当 sum大于target时，return
+    此题要注意的是 list中的元素不能为负。 
+    
+    class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> results = new ArrayList<List<Integer>>();
+        if (candidates == null || target == 0) {
+            return results;
+        }
+        helper(candidates, target, 0, results, new ArrayList<Integer>(), 0);
+        return results;
+    }
+    
+    private void helper(int[] candidates, int target, int index, List<List<Integer>> results, List<Integer> result, int sum) {
+        if (sum > target) {
+            return;
+        }
+        else if (sum == target) {
+            results.add(new ArrayList<Integer>(result));
+            return;
+        }
+        for (int i = index; i < candidates.length; i++) {
+            result.add(candidates[i]);
+            helper(candidates, target, i, results, result, sum + candidates[i]);
+            result.remove(result.size() -1);
+        }
+    }
+}
         
 }
