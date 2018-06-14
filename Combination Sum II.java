@@ -50,3 +50,36 @@ public class Solution {
         } 
     }
 }
+
+--------------6.13.18 update  --------------------
+  要求不能有重复元素， key在于当sort 和判断当当前元素和list中前一个元素一样时，跳过 class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> results = new ArrayList<List<Integer>>();
+        if (candidates == null || target == 0) {
+            return results;
+        }
+        Arrays.sort(candidates);
+         helper(candidates, target, 0, results, new ArrayList<Integer>(), 0);
+        return results;
+    }
+    
+    private void helper(int[] candidates, int target, int index, List<List<Integer>> results, List<Integer> result, int sum) {
+        if (sum > target) {
+            return;
+        }
+        if (sum == target) {
+            results.add(new ArrayList<Integer>(result));
+            return;
+        }
+        for (int i = index; i < candidates.length; i++) {
+            if (i > index && candidates[i] == candidates[i-1]) {
+                continue;
+            }
+            result.add(candidates[i]);
+            helper(candidates, target, i + 1, results, result, sum + candidates[i]);
+            result.remove(result.size() -1);
+        }
+    }
+    
+}
+  
