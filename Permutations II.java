@@ -49,7 +49,7 @@ public class Solution {
             if(used[i] == true){
                 continue;
             }
-            if(i!= 0 && nums[i] == nums[i-1] && used[i-1] == false ){ // condition for duplicates 
+            if(i!= 0 && nums[i] == nums[i-1] && used[i-1] == false ){ // used[i-1] == false时，才真正的回到了下一个元素。
                 continue; 
             }
             set.add(nums[i]);
