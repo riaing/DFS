@@ -73,3 +73,42 @@ public class Solution {
 
     }
 }
+
+
+-----------------------6.21 update -----------------
+  通过向string插入"("和")"直到两者的数量都为n，则一个combination构建完成。如何保证这个combination是well-formed？在插入过程中的任何时候：
+
+1. 只要"("的数量没有超过n，都可以插入"("。
+2. 而可以插入")"的前提则是当前的"("数量必须要多余当前的")"数量。
+
+
+
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> results = new ArrayList<String>();
+        StringBuilder result = new StringBuilder();
+        if (n <= 0) {
+            return results;
+        }
+        helper(n, result, results, 0, 0);
+        return results;
+    }
+    private void helper(int n, StringBuilder result, List<String> results, int nLeft, int nRight) {
+        if (nLeft == n && nRight == n) {
+            results.add(result.toString());
+            return;
+        }
+        
+        if (nLeft < n) {
+            result.append("(");
+            helper(n, result, results, nLeft+1, nRight);
+            result.deleteCharAt(result.length() - 1);
+        }
+        
+        if(nRight < nLeft) {
+            result.append(")");
+            helper(n, result, results, nLeft, nRight+1);
+            result.deleteCharAt(result.length() - 1);
+        }
+    }
+}
