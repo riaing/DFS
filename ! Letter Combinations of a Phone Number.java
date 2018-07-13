@@ -47,3 +47,46 @@ public class Solution {
         
 }
 
+--------------------------- 07.12.18 真正搞清楚每层layer的递归
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        List<String> results = new ArrayList<String>();
+        // TODO: check if only contains 2-9
+        if (digits == null || digits.length() == 0) {
+            return results;
+        }
+        // Creating a map mapping from the number to letters 
+        Map<Character, String> numToLetters = new HashMap<Character, String>();
+        numToLetters.put('2', "abc");
+        numToLetters.put('3', "def");
+        numToLetters.put('4', "ghi");
+        numToLetters.put('5', "jkl");
+        numToLetters.put('6', "mno");
+        numToLetters.put('7', "pqrs");
+        numToLetters.put('8', "tuv");
+        numToLetters.put('9', "wxyz");
+        
+        StringBuilder curResult = new StringBuilder();
+        
+        helper(digits, 0, curResult, results, numToLetters);
+        return results;
+    }
+    private void helper(
+        String digits, 
+        int layer, 
+        StringBuilder curResult, 
+        List<String> results, 
+        Map<Character, String> numToLetters) 
+    {
+        if (layer == digits.length()) {
+                results.add(curResult.toString());
+             return;
+        }
+        // In each layer, iterate from the first element. Here the change is layer! 
+        for (int i = 0; i < numToLetters.get(digits.charAt(layer)).length(); i++ ){
+                curResult.append(numToLetters.get(digits.charAt(layer)).charAt(i));
+                helper(digits, layer + 1, curResult, results, numToLetters);
+                curResult.deleteCharAt(curResult.length() -1);
+        }
+    } 
+}
