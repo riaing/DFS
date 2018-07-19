@@ -172,7 +172,55 @@ public class Solution {
             visited[i][j] =false; //记得要回溯
         }*/
          
-        
+        -------------------------- 7.19 updates
+		class Solution {
+    public boolean exist(char[][] board, String word) {
+        if (board == null || board.length == 0 || word == null) {
+            return false;
+        }
+        boolean[][] used = new boolean[board.length][board[0].length];
+        //在这里进行测验，避免重复无意义运算
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j< board[i].length; j++){
+                if (board[i][j] == word.charAt(0)) {
+                    
+                    if (helper(board, word, used, i , j, 0)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
+    private boolean helper(char[][] board, String word, boolean[][] used, int row, int col, int curLocal) {
+        if (curLocal == word.length()) {
+            return true;
+        }
+
+        // Order matters, must first check rows && cols in the range! otherwise the following condition used[row][col] == false 
+        // will throw out of bond exception
+        if ((row >= 0 
+            && row < board.length 
+            && col >= 0 
+            && col < board[0].length)
+            && used[row][col] == false
+            && board[row][col] == word.charAt(curLocal)) 
+        {
+            used[row][col] = true;
+            curLocal ++; 
+                if (helper(board, word, used, row -1, col, curLocal) 
+                    || helper (board, word, used, row + 1, col, curLocal)
+                    || helper(board, word, used, row , col - 1, curLocal) 
+                    || helper(board, word, used, row, col + 1, curLocal)) 
+                {
+                    return true;
+                }
+              used[row][col] = false;
+            }
+        return false;
+    }
+}
         
     }
 }
