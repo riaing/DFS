@@ -80,3 +80,31 @@ public class Solution {
 }
         
 }
+
+-----------------2.28.19 update:和 similar to above, but more clean-----------------------
+  class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+         List<List<Integer>> results = new ArrayList<List<Integer>>();
+        if (candidates == null || candidates.length == 0) {
+            return results; 
+        }
+        helper(results, new ArrayList<Integer>(), candidates, target, 0); 
+        return results;
+    }
+    
+    private void helper(List<List<Integer>> results, List<Integer> result, int[] candidates, int target, int cur) {
+        if (target == 0) {
+            results.add (new ArrayList<>(result));
+            return;
+        }
+        for (int i = cur; i < candidates.length; i ++) {
+            if (candidates[i] > target){
+                continue;
+            }
+            result.add(candidates[i]);
+            helper(results, result, candidates, target - candidates[i], i);
+            result.remove(result.size()-1);
+        }
+    }
+    
+}
