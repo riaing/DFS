@@ -74,3 +74,30 @@ class Solution {
         }
     }
 }
+
+-------------------------2.28.19 update 比上面的要更清楚--------------------------------------
+    
+class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<Integer> result = new ArrayList<Integer>();
+        List<List<Integer>> results = new ArrayList<List<Integer>>();
+        helper(k, n, result, results, 1);
+        return results;
+        
+    }
+    
+    private void helper(int k, int n, List<Integer> result, List<List<Integer>> results, int cur) {
+         if (n < 0){
+           return;  
+        }
+        if (result.size() == k && n ==0){
+            results.add(new ArrayList<Integer>(result));
+            return;
+        }
+        for (int i = cur; i <= 9; i++) {
+            result.add(i);
+            helper(k, n-i, result, results, i+1);
+            result.remove(result.size()-1);
+        }
+    }
+}
