@@ -82,4 +82,34 @@ public class Solution {
     }
     
 }
-  
+ -------------2.28.19 update 还是要注意 i！=index，因为第一次用完后才跳过接下来重复的元素----------------
+   class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> results = new ArrayList<List<Integer>>();
+        if (candidates == null || candidates.length == 0) {
+            return results; 
+        }
+        Arrays.sort(candidates);
+        helper(results, new ArrayList<Integer>(), candidates, target, 0); 
+        return results;
+    }
+    
+    private void helper(List<List<Integer>> results, List<Integer> result, int[] candidates, int target, int cur) {
+        if (target == 0) {
+            results.add (new ArrayList<>(result));
+            return;
+        }
+        for (int i = cur; i < candidates.length; i ++) {
+            if (candidates[i] > target){
+                continue;
+            }
+            if (i != cur && candidates[i] == candidates[i-1]) {
+                continue;
+            }
+            result.add(candidates[i]);
+            helper(results, result, candidates, target - candidates[i], i+1);
+            result.remove(result.size()-1);
+        }
+    }
+        
+}
