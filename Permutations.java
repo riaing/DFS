@@ -34,7 +34,7 @@ public class Solution {
         }
         for(int i = 0; i<nums.length; i ++){    
             if(used[i] == true){
-            //if (used[i] || i ==set.size() ){ 如果要求不能在原数组的位置上
+            //if (used[i] || i ==set.size() ){ 如果要求每个元素不能在原数组的位置上EG： [1,2,3] -》 [[2,3,1],[3,1,2]]。1，2，3均不在原位子上
                 continue;
             }
             set.add(nums[i]);
