@@ -18,7 +18,8 @@ Note:
 
 1 <= A.length <= 12
 1 <= A[i].length <= 20
---------------------------------DFS 找到所有string的permutation
+--------------------------------DFS 找到所有string的permutation, 找到superstring最短的一个。注意这里dfs存储的是string的index，而不是
+在dfs中找到最短superstring（费时间）
 class Solution {
     int bestLen = Integer.MAX_VALUE;
     int[] bestPathIndex; 
@@ -35,7 +36,7 @@ class Solution {
         }
         return res;
     }
-    //各个单词的combination进行组合，save组合的string的index，
+    //各个单词的string进行组合，save组合的string的index，
     private void dfs(String[] A, int index, boolean[] visited, int curLen, int[] pathIndex) {
         if (curLen >= bestLen) {
             return;
