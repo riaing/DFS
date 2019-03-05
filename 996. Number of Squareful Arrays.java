@@ -20,7 +20,7 @@ Note:
 
 1 <= A.length <= 12
 0 <= A[i] <= 1e9
-----------------------------------DFS--------------------------------------------------------------------------------
+----------------------------------DFS,permutation all element--------------------------------------------------------------------------
 //这个题的问题规模只有12个，也就是提醒我们可以使用O(N!)的算法，所以可以直接使用回溯法。
 class Solution {
     // 注意! integer进入递归后并不会被更新，所以用一个global variable。 
@@ -64,5 +64,71 @@ class Solution {
             used[i] = false;
             set.remove(set.size()-1);
         }
+    }
+}
+
+---------------------DFS construct a graph -----------------------------------------------------------------
+ 建立一个graph where every node is the element in A and edge vw such as node v + node w is squareful. DFS every node on 
+ the graph to find all Hamitonian path starting from such node 
+ Map<Integer, Integer> count: Key: every element in A; value: the occurance of such element (how many such node) 
+ Map<Integer, List<Integer>> graph; the edge of key to its values, where key-value is squreful. 
+ dfs(int start, int k): starting from node "start" and there are k nodes left to visit, find all paths of which such path 
+ starts from node "start", and visited k other nodes. 
+ 
+ 
+class Solution {
+    // for every int in A, how many node exist 
+    Map<Integer, Integer> count;
+    // for every v in A, find all it's squreful w in A such as v+w is squareful 
+    Map<Integer, List<Integer>> graph;
+    
+    private boolean squreful(int x, int y) {
+        return Math.sqrt(x + y) % 1 == 0;
+    }
+    
+    public int numSquarefulPerms(int[] A) {
+        //construct the graph of node
+        count = new HashMap<Integer, Integer>();
+        graph = new HashMap<Integer, List<Integer>>();
+        for (int x : A) {
+            count.put(x, count.getOrDefault(x, 0) + 1);
+        }
+        
+        // construct the graph of edge vw which v+w is squareful 
+        for (int v : count.keySet()) {
+            for (int w : count.keySet()) {
+                if (!graph.containsKey(v)) {
+                    graph.put(v, new ArrayList<>());
+                }
+                if (squreful(v,w)) {
+                    graph.get(v).add(w);
+                }
+            }
+        }
+        
+        // find all hamitonian path that start from each node in the graph 
+        int res = 0;
+        for (int x : count.keySet()) {
+            res = res + dfs(x, A.length -1);
+        }
+        return res;       
+    }
+    
+    // find all paths that start from node "start" to visit k nodes 
+    private int dfs(int start, int k) {
+        if (k == 0) {
+            return 1; 
+        }
+        // mark such node as visited 
+        count.put(start, count.get(start) -1);
+        int res = 0; 
+        for (int node : graph.get(start)) {
+            // if the node is not visited, visit it 
+            if (count.get(node) != 0) {
+                res = res + dfs(node, k-1);
+            }
+        }
+        count.put(start, count.get(start) + 1);
+        return res; 
     }
 }
