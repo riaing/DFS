@@ -67,7 +67,8 @@ class Solution {
     }
 }
 
----------------------DFS construct a graph.  time(n^n), space(n)S pace Complexity of hashmap in big-O notation is O(n) where n is the number of entries. -----------------------------------------------------------------
+------DFS construct a graph.  time(n^n), space(n) Space Complexity of hashmap is O(n) where n is the number of entries. -----
+ 
  建立一个graph where every node is the element in A and edge vw such as node v + node w is squareful. DFS every node on 
  the graph to find all Hamitonian path starting from such node 
  Map<Integer, Integer> count: Key: every element in A; value: the occurance of such element (how many such node) 
