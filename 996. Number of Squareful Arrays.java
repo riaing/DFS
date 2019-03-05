@@ -20,7 +20,7 @@ Note:
 
 1 <= A.length <= 12
 0 <= A[i] <= 1e9
-----------------------------------DFS,permutation all element--------------------------------------------------------------------------
+----------------------------------DFS,permutation all element. time (n!), space(n)--------------------------------------------------------------------------
 //这个题的问题规模只有12个，也就是提醒我们可以使用O(N!)的算法，所以可以直接使用回溯法。
 class Solution {
     // 注意! integer进入递归后并不会被更新，所以用一个global variable。 
@@ -67,7 +67,7 @@ class Solution {
     }
 }
 
----------------------DFS construct a graph -----------------------------------------------------------------
+---------------------DFS construct a graph.  time(n^n), space(n)-----------------------------------------------------------------
  建立一个graph where every node is the element in A and edge vw such as node v + node w is squareful. DFS every node on 
  the graph to find all Hamitonian path starting from such node 
  Map<Integer, Integer> count: Key: every element in A; value: the occurance of such element (how many such node) 
