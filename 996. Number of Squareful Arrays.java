@@ -20,7 +20,7 @@ Note:
 
 1 <= A.length <= 12
 0 <= A[i] <= 1e9
-----------------------------------DFS,permutation all element. time (n!), space(n)--------------------------------------------------------------------------
+----------------------solution 1.0 -----DFS,permutation all element. time (n!), space(n), with global var to store result --------------------------------------------------------------------------
 //这个题的问题规模只有12个，也就是提醒我们可以使用O(N!)的算法，所以可以直接使用回溯法。
 class Solution {
     // 注意! integer进入递归后并不会被更新，所以用一个global variable。 
@@ -67,7 +67,54 @@ class Solution {
     }
 }
 
-------DFS construct a graph.  time(n^n), space(n) Space Complexity of hashmap is O(n) where n is the number of entries. -----
+
+-----------solution 1.1 -------DFS permutation, with recursion return result --------------------------------------------------
+
+class Solution {
+    public int numSquarefulPerms(int[] A) {
+       
+        List<Integer> set = new ArrayList<Integer>(); 
+        boolean[] used = new boolean[A.length];
+        Arrays.sort(A); // will be easier to judge in later 
+        if(A != null){
+            return helper(A, used, set); 
+        }
+        return 0; 
+    }
+    
+    // 判断是否squareful，看根号后mod的余数是否为零
+    private boolean squareful(int i, int j) {
+        return Math.sqrt(i + j) % 1 == 0;
+    }
+    
+    private int helper(int[] A, boolean[] used,  List<Integer> set){
+        if(set.size() == A.length){
+            return 1;
+        }
+        int res = 0;
+        for(int i = 0; i<A.length; i ++){    
+            if(used[i] == true){
+                continue;
+            }
+            // Avoid duplications.
+            if(i!= 0 && A[i] == A[i-1] && used[i-1] == false ){ 
+                continue; 
+            }
+            // Prune invalid solutions.
+            if (!set.isEmpty() && !squareful(set.get(set.size()-1), A[i])) {
+                continue; 
+            }      
+            set.add(A[i]);
+            used[i] = true;
+            res += helper(A, used, set);
+            used[i] = false;
+            set.remove(set.size()-1);
+        }
+        return res;
+    }
+}
+ 
+---so 2---DFS construct a graph.  time(n^n), space(n) Space Complexity of hashmap is O(n) where n is the number of entries. -----
  
  建立一个graph where every node is the element in A and edge vw such as node v + node w is squareful. DFS every node on 
  the graph to find all Hamitonian path starting from such node 
