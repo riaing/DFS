@@ -172,55 +172,106 @@ public class Solution {
             visited[i][j] =false; //记得要回溯
         }*/
          
-        -------------------------- 7.19 updates
-		class Solution {
+----------------------------直接从这开始看---------------------------------------------
+first backTracking solution 1: 
+	    class Solution {
     public boolean exist(char[][] board, String word) {
-        if (board == null || board.length == 0 || word == null) {
-            return false;
-        }
-        boolean[][] used = new boolean[board.length][board[0].length];
-        //在这里进行测验，避免重复无意义运算
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j< board[i].length; j++){
-                if (board[i][j] == word.charAt(0)) {
-                    
-                    if (helper(board, word, used, i , j, 0)) {
+        boolean[][] visited = new boolean[board.length][board[0].length];
+        for (int i = 0; i< board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                    if (dfs(board, i, j, 0, word, visited)){
                         return true;
                     }
-                }
             }
         }
         return false;
     }
     
-    private boolean helper(char[][] board, String word, boolean[][] used, int row, int col, int curLocal) {
-        if (curLocal == word.length()) {
+    private boolean dfs(char[][] board, int row, int col, int index, String word, boolean[][] visited) {
+        if (index == word.length()) {
             return true;
         }
-
-        // Order matters, must first check rows && cols in the range! otherwise the following condition used[row][col] == false 
-        // will throw out of bond exception
-        if ((row >= 0 
-            && row < board.length 
-            && col >= 0 
-            && col < board[0].length)
-            && used[row][col] == false
-            && board[row][col] == word.charAt(curLocal)) 
-        {
-            used[row][col] = true;
-            curLocal ++; 
-                if (helper(board, word, used, row -1, col, curLocal) 
-                    || helper (board, word, used, row + 1, col, curLocal)
-                    || helper(board, word, used, row , col - 1, curLocal) 
-                    || helper(board, word, used, row, col + 1, curLocal)) 
-                {
+          
+        //Order matters, must first check rows && cols in the range! otherwise the following condition used[row][col] == false will throw out of bond exception
+        if (row >= 0 && row < board.length && col >= 0 && col < board[0].length && !visited[row][col] && board[row][col] == word.charAt(index)) {
+            visited[row][col] = true; 
+            int[] rowIndex = {1,-1,0,0};
+            int[] colIndex = {0, 0, 1, -1};
+            for (int i = 0; i < rowIndex.length; i++) {
+                int newRow = row + rowIndex[i];
+                int newCol = col + colIndex[i];
+                if (dfs(board, newRow, newCol, index+1, word, visited)) {
                     return true;
-                }
-              used[row][col] = false;
+                }    
             }
-        return false;
+            visited[row][col] = false; 
+        }
+        return false; 
     }
 }
+
+----------------------------------------------------------------
+second backtracking solution 2: 
+	class Solution {
+    public boolean exist(char[][] board, String word) {
+        boolean[][] visited = new boolean[board.length][board[0].length];
+        for (int i = 0; i< board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                    if (dfs(board, i, j, 0, word, visited)){
+                        return true;
+                    }
+            }
+        }
+        return false;
+    }
+    
+    private boolean dfs(char[][] board, int row, int col, int index, String word, boolean[][] visited) {
+     
+        if (board[row][col] == word.charAt(index)) {
+            if (index+1 == word.length()) {
+            return true;
+            }
+            visited[row][col] = true;
+            int[] rowIndex = {1,-1,0,0};
+            int[] colIndex = {0, 0, 1, -1};
+            for (int i = 0; i < rowIndex.length; i++) {
+                int newRow = row + rowIndex[i];
+                int newCol = col + colIndex[i];
+                if (newRow >= 0 && newRow < board.length && newCol >= 0 && newCol < board[0].length && !visited[newRow][newCol]) {
+                    if (dfs(board, newRow, newCol, index+1, word, visited)) {
+                        return true;
+                    }
+                }
+            }
+       			----this is the same as the for loop above ----- 
+            // if (row-1>= 0 && !visited[row-1][col]) {
+            //     if (dfs(board, row-1, col, index+1, word, visited)) {
+            //         return true;
+            //     }
+            // }
+            // if (row+1 < board.length && !visited[row+1][col]) {
+            //     if (dfs(board, row +1, col, index+1, word, visited)) {
+            //         return true;
+            //     }
+            // } 
+            // if (col -1 >= 0 && !visited[row][col-1]) {
+            //     if (dfs(board, row, col -1, index+1, word, visited)) {
+            //         return true;
+            //     }
+            // }
+            // if (col+1 < board[0].length && !visited[row][col+1]) {
+            //     if (dfs(board, row, col +1, index+1, word, visited)) {
+            //         return true;
+            //     }
+            // }
+				
+            visited[row][col] = false;
+        }
+        return false; 
         
     }
 }
+      
+        
+    
+
