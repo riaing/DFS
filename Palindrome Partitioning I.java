@@ -57,3 +57,92 @@ public class Solution {
         
     }
 }
+
+--------------------------------03.15.2019 update-----------------------------------------------
+每次就去当前s的substring: 
+
+  public class Solution {
+    /*
+     * @param s: A string
+     * @return: A list of lists of string
+     */
+    public List<List<String>> partition(String s) {
+        List<List<String>>res = new ArrayList<>();
+        if(s == null || s.length() == 0) {
+            return res;
+        }
+        dfs(res, new ArrayList<String>(), s);
+        return res;
+    }
+    
+    private void dfs(List<List<String>>res, List<String>cur, String s) {
+        if(s.equals("")) {
+            List<String>copy = new ArrayList<>(cur);
+            res.add(copy);
+            return;
+        }
+        for(int i = 1; i <= s.length(); i++) {
+            String substr = s.substring(0, i);
+            if(isPali(substr)) {
+                cur.add(substr);
+                dfs(res, cur, s.substring(i, s.length()));
+                cur.remove(cur.size() - 1);
+            }
+        }
+    }
+    
+    private boolean isPali(String s) {
+        if(s == null || s.length() == 0) {
+            return true;
+        }
+        int left = 0, right = s.length() - 1;
+        while(left <= right) {
+            if(s.charAt(left) != s.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+}
+-------------------------------------------------- solution 2, same thoughts, different approach-----------
+  https://www.youtube.com/watch?v=4ykBXGbonlA
+Time 0(n!)
+
+class Solution {
+    public List<List<String>> partition(String s) {
+        List<List<String>> res = new ArrayList<List<String>>();
+        dfs(s, res, new ArrayList<String>(), 0);
+        return res;   
+    }
+    
+    
+    private void dfs(String s, List<List<String>> res, List<String> cur, int startIndex) {
+        if (startIndex == s.length()) {
+            res.add(new ArrayList<String>(cur));
+            return;
+        }
+        for (int i = startIndex; i< s.length(); i++) {
+            String x = s.substring(startIndex, i+1);
+            if (isPalindrome(x)) {
+                cur.add(x);
+                dfs(s, res, cur, i+1);
+                cur.remove(cur.size() -1); 
+            }
+        }
+    }
+    
+    private boolean isPalindrome(String s) {
+        int start = 0;
+        int end = s.length()-1;
+        while (start < end) {
+            if (s.charAt(start) != s.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
+    }
+}
