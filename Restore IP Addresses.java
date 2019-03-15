@@ -55,6 +55,53 @@ public class Solution {
             return (tmp.length() == 1);
         }
         return Integer.valueOf(tmp)>= 0 &&  Integer.valueOf(tmp)<= 255; 
+    } 
+}
+
+--------------------------------03.14.2019 update--------------------------------------------------------------
+ /** Valid定义：IP地址总共有四段，每一段可能有一位，两位或者三位，范围是[0, 255] 并且大于两位时，01这种不合法
+想法，我们用k来表示当前还需要分的段数，如果k = 0，则表示三个点已经加入完成，四段已经形成，若这时字符串刚好为空，则将当前分好的结果保存。若k != 0, 则对于每一段，我们分别用一位，两位，三位来尝试，分别判断其合不合法，如果合法，则调用递归继续分剩下的字符串，最终和求出所有合法组合
+http://www.cnblogs.com/grandyang/p/4305572.html 
+
+time:总共放n个隔板，每段可以有1，2，3位数三种选择，-> 0(3^n) 
+**/
+class Solution {
+    public List<String> restoreIpAddresses(String s) {
+        List<String> res = new ArrayList<String>();
+        dfs(s, 4, "", res);
+        return res; 
     }
     
+    private void dfs(String s, int k, String address, List<String> res) {
+        if (k == 0) {
+            if (s.isEmpty()) {
+                res.add(address);
+            }
+            // even though s is not empty, still need to return
+            return;
+        }
+
+        // 分别对三种情况：一位数，两位数，三位数进行遍历
+        for (int i = 1; i < 4; i++) {
+            if (i > s.length()) {
+                break;
+            }
+            String segment = s.substring(0, i);
+            if (validString(segment)) {
+                // we go to next bucket 
+                dfs(s.substring(i), k-1, address + segment + (k==1 ? "" : "."), res);
+            }
+        }
+    }
+    
+    
+    // must between [0, 255] and if > 1 digits, the first letter cannot be 0. eg: 01 is not valid. 
+    private boolean validString(String s) {
+        // "010" -> 10 
+        int n = Integer.parseInt(s);
+        if (n < 0 || n > 255 || String.valueOf(n).length() != s.length()) {
+            return false;
+        }
+        return true;
+    }
 }
