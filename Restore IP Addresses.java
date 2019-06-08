@@ -105,3 +105,29 @@ class Solution {
         return true;
     }
 }
+
+---------------------判断能否组成valid IP-----------------------------------------
+    
+     private void dfs(String s, int k) {
+        if (k == 0 && s.isEmpty()) {
+            return true;
+        }
+        if (k < 0) {
+            return false;
+        }
+
+        // 分别对三种情况：一位数，两位数，三位数进行遍历
+        for (int i = 1; i < 4; i++) {
+            if (i > s.length()) {
+                break;
+            }
+            String segment = s.substring(0, i);
+            if (validString(segment)) {
+                // we go to next bucket 
+                if (dfs(s.substring(i), k-1) {
+                    return true;
+                }
+            }
+        }
+         return false;
+    }
