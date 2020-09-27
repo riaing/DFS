@@ -14,6 +14,8 @@ A solution set is:
 
 
 基本思路是先排好序，然后每次递归中把剩下的元素一一加到结果集合中，并且把目标减去加入的元素，然后把剩下元素（包括当前加入的元素）放到下一层递归中解决子问题。
+Time Complextiy: 以上例子为例，最多层数总共有 x = target/min value from candidates, -> 7/2层；如果第一层选2， 则第二层有n中选择，第二层也有n中选择。如果第一层选3，则第二层有n-1中选择（不能重复选2）。 
+所以每层最多有n中选择。 总的时间是O(n^x), n的指数次方（exponential) 
 public class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> allsets = new ArrayList<List<Integer>>() ; 
@@ -81,7 +83,7 @@ public class Solution {
         
 }
 
------------------2.28.19 update:和 similar to above, but more clean-----------------------
+-----------------2.28.19/ /9.26.2020 update:和 similar to above, but more clean-----------------------
   class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
          List<List<Integer>> results = new ArrayList<List<Integer>>();
