@@ -83,6 +83,11 @@ public class Solution {
      * @param S: A set of numbers.
      * @return: A list of lists. All valid subsets.
      */
+     
+     /*
+时间: 总共会有2^n 个子集。每次都要 copy 一下 list。所以是 n*2n
+空间一样
+*/
 public List<List<Integer>> subsets(int[] nums) {
 	         List<List<Integer>> results = new ArrayList<List<Integer>>();
 	         List<Integer> subset = new ArrayList<Integer>(); 
@@ -138,11 +143,6 @@ public List<List<Integer>> subsets(int[] nums) {
             subset.add(nums[index])；
             subsetHelper(nums, index+1, subset, results);
             subset.remove(subset.size()-1); 
-           
-            
-            
-         
-	 
 	  }
 	
 }
