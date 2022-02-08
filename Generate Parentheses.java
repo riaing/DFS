@@ -112,3 +112,30 @@ class Solution {
         }
     }
 }
+
+------------------------- 2/7/2022 -----------------------------------------------------------
+  /*
+time O(n*2^n) -> O(n) for creating string 
+space (n * 2^N)
+*/
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> results = new ArrayList<String>();
+        helper(n, 0, 0, results, "");
+        return results; 
+    }
+    
+    private void helper(int n, int left, int right, List<String> results, String cur) { 
+        if (right > left || right > n || left > n) {
+            return;
+        }
+        if (right == n && left == n) {
+            results.add(cur);
+            return;
+        }
+        
+        helper(n, left+1, right, results, cur + "(");
+        helper(n, left, right+1, results, cur + ")");
+        return;
+    }
+}
