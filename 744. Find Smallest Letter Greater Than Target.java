@@ -61,3 +61,31 @@ class Solution {
         return letters[start];
     }
 }
+
+---------------- educative 模板 -----------------------------------------------
+
+   /*
+find first element > k
+*/
+class Solution {
+    public char nextGreatestLetter(char[] letters, char target) {
+        int start = 0;
+        int end = letters.length - 1;
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            if (num(letters[mid]) <= num(target)) {
+                start = mid + 1;
+            }
+            else {
+                end = mid - 1;
+            }
+        }
+        return start > letters.length - 1 ? letters[0] : letters[start];
+    }
+    
+    private int num(char letter) {
+        return letter - 'a';
+    }
+}
+   
+   
