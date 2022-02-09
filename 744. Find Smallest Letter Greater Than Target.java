@@ -67,13 +67,16 @@ class Solution {
    /*
 find first element > k
 */
+/*
+find first element > k
+*/
 class Solution {
     public char nextGreatestLetter(char[] letters, char target) {
         int start = 0;
         int end = letters.length - 1;
         while (start <= end) {
             int mid = start + (end - start) / 2;
-            if (num(letters[mid]) <= num(target)) {
+            if (letters[mid] <= target) {
                 start = mid + 1;
             }
             else {
@@ -83,9 +86,11 @@ class Solution {
         return start > letters.length - 1 ? letters[0] : letters[start];
     }
     
-    private int num(char letter) {
-        return letter - 'a';
-    }
+    // letter 可以比大小
+    // private int num(char letter) {
+    //     return letter - 'a';
+    // } 
+}
 }
    
    
