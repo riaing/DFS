@@ -70,3 +70,67 @@ class Solution {
         return c - '0' < 0 || c - '0' > 9; 
     }
 }
+
+----------- 2022.3.26 同样思路 + memo --------------------------------------
+/*
+DC: 如果括号不嵌套，怎么放？会发现其实就是把符号左右分成两半，再连起来
+
+pruning：
+那么按照算法逻辑，按照运算符进行分割，一定存在下面两种分割情况：
+
+(1 + 1) + (1 + 1 + 1)
+(1 + 1 + 1) + (1 + 1)
+算法会依次递归每一种情况，其实就是冗余计算嘛，所以我们可以对解法代码稍作修改，加一个备忘录来避免这种重复计算
+
+Time:
+当于在求算式 input 的所有合法括号组合吗. 
+Estimated time complexity will be O(N*2^N) but the actual time complexity O(4^n / sqrt{n}) is bounded by the Catalan number and is beyond the scope of a coding interview.
+
+Space: 
+The space complexity of this algorithm will also be exponential, estimated at O(2^N) though the actual will be  O(4^n / sqrt{n}) 
+*/
+
+class Solution {
+    Map<String, List<Integer>> memo = new HashMap<String, List<Integer>>(); 
+    public List<Integer> diffWaysToCompute(String expression) {
+        List<Integer> results = new ArrayList<Integer>();
+        if (memo.containsKey(expression)) {
+            return memo.get(expression);
+        }
+        for (int i = 0; i < expression.length(); i++) {
+            if (!Character.isDigit(expression.charAt(i))) {
+                // 根据符号把s划分成两半
+                List<Integer> first = diffWaysToCompute(expression.substring(0, i));
+                List<Integer> second = diffWaysToCompute(expression.substring(i+1));
+                // 把两半的结果接起来
+                for (int a : first) {
+                    for (int b : second) {
+                        results.add(calculate(a, expression.charAt(i), b));
+                    }
+                }
+            }
+        }
+        
+        // base: 如果没能连起来，说明整个string就是个数字 
+        if (results.isEmpty()) {
+            results.add(Integer.parseInt(expression));
+        }
+        memo.put(expression, results);
+        return results;
+    }
+    
+    private int calculate(int first, char symbol, int second) {
+        int val = 0; 
+        if (symbol == '-') {
+            val = first - second;
+        }
+        if (symbol == '+') {
+            val = first + second;
+        }
+        if (symbol == '*') {
+            val = first * second;
+        }
+        return val; 
+    }
+}    
+    
